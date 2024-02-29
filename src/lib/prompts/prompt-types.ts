@@ -14,6 +14,7 @@ export type Item = {
   description?: string;
   alwaysShow?: boolean;
   placeholder?: string;
+  code?: string;
 };
 
 export type Prompt = { name: string; type: PROMPT_TYPES } & Options &

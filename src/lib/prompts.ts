@@ -4,7 +4,11 @@ import promptTypes, {
   Prompt,
   PromptStatus,
 } from "./prompts/prompt-types";
-import { CommitMessage, serializeSubject } from "./commit-message";
+import {
+  CommitMessage,
+  serializeSubject,
+  serializeHeader,
+} from "./commit-message";
 import commitlint from "./commitlint";
 import { QuickInputButtons } from "vscode";
 import { gitmojis } from "../vendors/giticon";
@@ -39,11 +43,12 @@ export default async function prompts({
       type: PROMPT_TYPES.QUICK_PICK,
       name: "gitmoji",
       placeholder: "Choose a gitmoji.",
-      items: gitmojis.map(function ({ emoji, name, description }) {
+      items: gitmojis.map(function ({ emoji, name, description, code }) {
         return {
           label: emojiFormat === "code" ? name : emoji,
           description: emojiFormat === "code" ? emoji : name,
           detail: description,
+          code,
         };
       }),
       noneItem: {
@@ -55,10 +60,18 @@ export default async function prompts({
     },
     {
       type: PROMPT_TYPES.INPUT_BOX,
+      name: "scope",
+      placeholder: "Denote the scope of this change.",
+      validate(input: string) {
+        return commitlint.lintScope(input);
+      },
+    },
+    {
+      type: PROMPT_TYPES.INPUT_BOX,
       name: "subject",
       placeholder: "Write a short, imperative tense description of the change.",
       validate(input: string) {
-        const { gitmoji } = commitMessage;
+        const { scope, gitmoji } = commitMessage;
         const serializedSubject = serializeSubject({
           gitmoji,
           subject: input,
@@ -73,6 +86,29 @@ export default async function prompts({
             subjectError += ")";
           }
           return subjectError;
+        }
+
+        let headerError = commitlint.lintHeader(
+          serializeHeader({
+            scope,
+            gitmoji,
+            subject: input,
+          })
+        );
+        if (headerError) {
+          headerError += " (";
+          if (scope) {
+            headerError += ", ";
+            headerError += "scope: ";
+            headerError += scope;
+          }
+          if (gitmoji) {
+            headerError += ", ";
+            headerError += "gitmoji: ";
+            headerError += gitmoji;
+          }
+          headerError += ")";
+          return headerError;
         }
 
         return "";
@@ -173,6 +209,10 @@ export default async function prompts({
         activeItem === questions[index].noneItem
       ) {
         return "";
+      }
+
+      if (questions[index].name === "gitmoji") {
+        return `${activeItem.label}: ${activeItem.code}`;
       }
 
       return activeItem.label;

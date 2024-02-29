@@ -10,7 +10,7 @@ export const gitmojis = [
   {
     emoji: "✨",
     entity: "&#x2728;",
-    code: ":feat:",
+    code: ":sparkles:",
     description: "A new feature.",
     name: "feat",
     semver: "minor",
@@ -26,7 +26,7 @@ export const gitmojis = [
   {
     emoji: "🐛",
     entity: "&#x1f41b;",
-    code: ":fix:",
+    code: ":bug:",
     description: "Fix a bug.",
     name: "fix",
     semver: "patch",
@@ -42,7 +42,7 @@ export const gitmojis = [
   {
     emoji: "💄",
     entity: "&#ff99cc;",
-    code: ":style:",
+    code: ":lipstick:",
     description: "Add or update the UI and style files.",
     name: "style",
     semver: "patch",
@@ -58,7 +58,7 @@ export const gitmojis = [
   {
     emoji: "♻️",
     entity: "&#x267b;",
-    code: ":refactor:",
+    code: ":recycle:",
     description: "A code change that neither fixes a bug nor adds a feature.",
     name: "refactor",
     semver: null,
@@ -66,7 +66,7 @@ export const gitmojis = [
   {
     emoji: "⚡️",
     entity: "&#x26a1;",
-    code: ":perf:",
+    code: ":zap:",
     description: "Improve performance.",
     name: "perf",
     semver: "patch",
@@ -74,7 +74,7 @@ export const gitmojis = [
   {
     emoji: "📝",
     entity: "&#x1f4dd;",
-    code: ":docs:",
+    code: ":memo:",
     description: "Add or update documentation.",
     name: "docs",
     semver: null,
@@ -82,7 +82,7 @@ export const gitmojis = [
   {
     emoji: "🔥",
     entity: "&#x1f525;",
-    code: ":remove:",
+    code: ":fire:",
     description: "Remove code or files.",
     name: "remove",
     semver: null,

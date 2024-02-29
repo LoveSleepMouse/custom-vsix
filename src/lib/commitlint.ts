@@ -95,8 +95,6 @@ class Commitlint {
 
   lintScope(scope: string) {
     return this.lintRules({ scope } as Commit, [
-      "scope-enum",
-      "scope-case",
       "scope-empty",
       "scope-max-length",
       "scope-min-length",

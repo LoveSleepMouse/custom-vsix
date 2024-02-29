@@ -1,9 +1,17 @@
 export class CommitMessage {
+  private _scope: string = "";
   private _gitmoji: string = "";
   private _subject: string = "";
   private _body: string = "";
   private _footer: string = "";
-  private _ci: string = "";
+
+  get scope() {
+    return this._scope;
+  }
+
+  set scope(input: string) {
+    this._scope = input.trim();
+  }
 
   get gitmoji() {
     return this._gitmoji;
@@ -36,14 +44,6 @@ export class CommitMessage {
   set footer(input: string) {
     this._footer = input.trim();
   }
-
-  get ci() {
-    return this._ci;
-  }
-
-  set ci(input: string) {
-    this._ci = input.trim();
-  }
 }
 
 export function serializeSubject(partialCommitMessage: {
@@ -59,20 +59,28 @@ export function serializeSubject(partialCommitMessage: {
     result += " ";
   }
   if (subject) {
-    result += "【" + subject + "】";
+    result += subject;
   }
   return result;
 }
 
 export function serializeHeader(partialCommitMessage: {
+  scope: string;
   gitmoji: string;
   subject: string;
 }) {
   let result = "";
-  const subject = serializeSubject(partialCommitMessage);
+  const { scope, gitmoji, subject } = partialCommitMessage;
+  if (gitmoji) {
+    result += `${gitmoji}`;
+  }
+  if (scope) {
+    result += `【${scope}】`;
+  }
   if (subject) {
     result += subject;
   }
+
   return result;
 }
 
