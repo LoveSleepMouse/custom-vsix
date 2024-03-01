@@ -81,7 +81,7 @@ export function serializeHeader(partialCommitMessage: {
   let result = "";
   const { scope, gitmoji, subject } = partialCommitMessage;
   if (gitmoji) {
-    result += `${gitmoji}`;
+    result += `${gitmoji} `;
   }
   if (scope) {
     result += `【${scope}】`;
