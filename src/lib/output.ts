@@ -1,10 +1,10 @@
-import * as vscode from 'vscode';
-import * as configuration from './configuration';
+import * as vscode from "vscode";
+import * as configuration from "./configuration";
 
 let output: vscode.OutputChannel;
 
 export function initialize() {
-  output = vscode.window.createOutputChannel('Trip Commits');
+  output = vscode.window.createOutputChannel("Trip Commits");
 }
 
 export function appendLine(message: string) {
@@ -12,33 +12,33 @@ export function appendLine(message: string) {
 }
 
 export function info(message: string) {
-  appendLine('[info] ' + message);
+  appendLine("[info] " + message);
 }
 
 export function warning(message: string) {
-  appendLine('[warning] ' + message);
+  appendLine("[warning] " + message);
 }
 
 // give error or message of the custom error
 export function error(
   functionName: string,
   arg: string | Error,
-  isBreaking?: boolean,
+  isBreaking?: boolean
 ) {
-  const message = typeof arg === 'string' ? arg : arg.stack;
+  const message = typeof arg === "string" ? arg : arg.stack;
   appendLine(`[error] ${functionName}: ${message}`);
 
-  const body = typeof arg === 'string' ? arg : arg.message;
+  const body = typeof arg === "string" ? arg : arg.message;
   vscode.window.showErrorMessage(`trip-commits: ${body}`);
   if (isBreaking) {
-    throw new Error('custom breaking error has been catch!');
+    throw new Error("custom breaking error has been catch!");
   }
 }
 
 export function extensionPackageJSON(id: string) {
   const packageJSON = vscode.extensions.getExtension(id)?.packageJSON;
   if (packageJSON === undefined) {
-    error('outputExtensionVersion', `Extension ${id} not found!`, true);
+    error("outputExtensionVersion", `Extension ${id} not found!`, true);
   }
   return packageJSON;
 }
@@ -59,38 +59,3 @@ export function extensionConfiguration(id: string) {
 export function relatedExtensionConfiguration(key: string) {
   info(`${key}: ${configuration.getConfiguration().get(key)}`);
 }
-
-// export async function showNewVersionNotes(
-//   id: string,
-//   context: vscode.ExtensionContext,
-//   force: boolean = false,
-// ) {
-//   if (configuration.get('showNewVersionNotes') || force) {
-//     const lastUsedVersion = context.globalState.get('version', '0.0.0');
-//     info(`last used version: ${lastUsedVersion}`);
-//     const packageJSON = extensionPackageJSON(id);
-//     const currentVersion = packageJSON.version;
-//     context.globalState.update('version', currentVersion);
-
-//     const welcomeNewVersion = getSourcesLocalize('output.welcomeNewVersion');
-//     const showReleaseNotes = getSourcesLocalize('output.showReleaseNotes');
-//     const dontShowThisAgain = getSourcesLocalize('output.dontShowThisAgain');
-//     const changelog = vscode.Uri.parse(
-//       'https://github.com/vivaxy/vscode-conventional-commits/blob/master/CHANGELOG.md',
-//     );
-//     if (lastUsedVersion != currentVersion || force) {
-//       const title = localize('extension.name');
-//       const btn = await vscode.window.showInformationMessage(
-//         `${title}: ` + welcomeNewVersion + ` ${currentVersion} !`,
-//         showReleaseNotes,
-//         dontShowThisAgain,
-//       );
-//       switch (btn) {
-//         case showReleaseNotes:
-//           return vscode.env.openExternal(changelog);
-//         case dontShowThisAgain:
-//           return configuration.update('showNewVersionNotes', false, true);
-//       }
-//     }
-//   }
-// }

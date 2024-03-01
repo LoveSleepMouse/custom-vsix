@@ -2,7 +2,7 @@
   "name": "trip-commits",
   "displayName": "Trip Commits",
   "description": "code submit format",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.86.0"
   },
@@ -11,13 +11,17 @@
   ],
   "activationEvents": [],
   "main": "./dist/extension.js",
-  "icon": "public/dark.png",
+  "icon": "./public/dark.png",
   "publisher": "tripFrontEnd",
   "contributes": {
     "commands": [
       {
         "command": "extension.tripCommits",
-        "title": "Trip Commits"
+        "title": "Trip Commits",
+        "icon": {
+          "dark": "./public/menu-icon-dark.svg",
+          "light": "./public/menu-icon-light.svg"
+        }
       }
     ],
     "menus": {

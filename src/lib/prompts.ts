@@ -12,6 +12,7 @@ import {
 import commitlint from "./commitlint";
 import { QuickInputButtons } from "vscode";
 import { gitmojis } from "../vendors/giticon";
+import * as output from "./output";
 
 export default async function prompts({
   gitmoji,
@@ -121,6 +122,36 @@ export default async function prompts({
       placeholder: "Provide a longer description of the change.",
       validate(input: string) {
         return commitlint.lintBody(input);
+      },
+      format: lineBreakFormatter,
+    },
+    {
+      type: PROMPT_TYPES.QUICK_PICK,
+      name: "footerType",
+      placeholder: "Choose a footerType.",
+      items: [
+        {
+          label: "iQuality",
+          detail: "Please enter feedback ID",
+        },
+        {
+          label: "iDev",
+          detail: "An efficient Teamwork solution. Please enter ID",
+        },
+      ],
+      noneItem: {
+        label: "None",
+        description: "",
+        detail: "No footerType",
+        alwaysShow: true,
+      },
+    },
+    {
+      type: PROMPT_TYPES.INPUT_BOX,
+      name: "footer",
+      placeholder: "Please enter iQ ID or iDev ID.",
+      validate(input: string) {
+        return commitlint.lintFooter(input);
       },
       format: lineBreakFormatter,
     },

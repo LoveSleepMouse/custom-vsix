@@ -12,13 +12,10 @@ export type Configuration = {
   gitmoji: boolean;
   emojiFormat: EMOJI_FORMAT;
   showEditor: boolean;
-  scopes: string[];
+  scopes: string;
   lineBreak: string;
-  promptScopes: boolean;
   promptBody: boolean;
   promptFooter: boolean;
-  promptCI: boolean;
-  showNewVersionNotes: boolean;
   "editor.keepAfterSave": boolean;
 };
 

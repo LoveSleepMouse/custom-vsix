@@ -3,6 +3,7 @@ export class CommitMessage {
   private _gitmoji: string = "";
   private _subject: string = "";
   private _body: string = "";
+  private _footerType: string = "";
   private _footer: string = "";
 
   get scope() {
@@ -35,6 +36,14 @@ export class CommitMessage {
 
   set body(input: string) {
     this._body = input.trim();
+  }
+
+  get footerType() {
+    return this._footerType;
+  }
+
+  set footerType(input: string) {
+    this._footerType = input.trim();
   }
 
   get footer() {
@@ -86,12 +95,13 @@ export function serializeHeader(partialCommitMessage: {
 
 export function serialize(commitMessage: CommitMessage) {
   let message = serializeHeader(commitMessage);
-  const { body, footer } = commitMessage;
+  const { body, footerType, footer } = commitMessage;
   if (body) {
     message += `\n\n${body}`;
   }
-  if (footer) {
-    message += `\n\n${footer}`;
+
+  if (footerType && footer) {
+    message += `\n\n${footerType}: ${footer}`;
   }
   return message;
 }
