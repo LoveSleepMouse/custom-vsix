@@ -13,6 +13,7 @@ import commitlint from "./commitlint";
 import { QuickInputButtons } from "vscode";
 import { gitmojis } from "../vendors/giticon";
 import * as output from "./output";
+import { IDEV } from "../configs/keys";
 
 export default async function prompts({
   gitmoji,
@@ -135,7 +136,7 @@ export default async function prompts({
           detail: "Please enter feedback ID",
         },
         {
-          label: "iDev",
+          label: IDEV,
           detail: "An efficient Teamwork solution. Please enter ID",
         },
       ],

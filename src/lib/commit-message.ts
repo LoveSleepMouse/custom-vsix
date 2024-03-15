@@ -1,3 +1,5 @@
+import { IDEV } from "../configs/keys";
+
 export class CommitMessage {
   private _scope: string = "";
   private _gitmoji: string = "";
@@ -101,7 +103,11 @@ export function serialize(commitMessage: CommitMessage) {
   }
 
   if (footerType && footer) {
-    message += `\n\n${footerType}: ${footer}`;
+    if (footerType === IDEV) {
+      message += `\n\n${footerType}: ##${footer}`;
+    } else {
+      message += `\n\n${footerType}: ${footer}`;
+    }
   }
   return message;
 }
